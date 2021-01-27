@@ -1,20 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author Admin
- */
+import java.util.ArrayList;
+import jdk.internal.org.objectweb.asm.Opcodes;
+
 public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ArrayList<Student> list = new ArrayList<>();
+        Validation validation = new Validation();
+        list.add(new Student("HE150573", "Duong Thuy Trang","Spring 2021", "PRO192"));
     }
     
 }

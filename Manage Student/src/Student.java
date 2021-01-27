@@ -1,40 +1,35 @@
 
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Set;
 
 public class Student implements Comparable<Student>{
     private String ID;
     private String name;
-    //Save season and year separately to create complete semester ("Spring 2021", "Summer 2021"...)
-    private String season;
-    private int year;
     private String semester;
     private String course;
-    
-    //Each student can have multiple course (no duplicate) in one semester
-    Map<String, Set<String>> m = new HashMap<>();
-    
-    String semester() {
-        semester = season + String.valueOf(year);
-        return semester;
-    }
-
-    public Student(String ID, String name, String season, int year, String course) {
+        
+    public Student(String ID, String name, String semester, String course) {
         this.ID = ID;
         this.name = name;
-        this.season = season;
-        this.year = year;
-        this.semester = semester();
+        this.semester = semester;
+        try {
+            if (!course.equalsIgnoreCase("java")
+                    || !course.equalsIgnoreCase("c/c++")
+                    || !course.equalsIgnoreCase(".net")) {
+                throw new InputMismatchException();
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Course unavailable! You can't input this student!");
+        }
         this.course = course;
     }
 
     public Student() {
         this.ID = "No ID";
         this.name = "No name";
-        this.season = "No season";
-        this.year = 0;
-        this.semester = semester();
+        this.semester = "No semester";
         this.course = "No course";
     }
 
@@ -80,3 +75,39 @@ public class Student implements Comparable<Student>{
     }
 }
 
+class Report {
+
+    private String studentName;
+    private String courseName;
+    private int totalCourse;
+
+    public Report() {
+    }
+
+    public Report(String studentName, String courseName, int totalCourse) {
+        this.studentName = studentName;
+        this.courseName = courseName;
+        this.totalCourse = totalCourse;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public int getTotalCourse() {
+        return totalCourse;
+    }
+    
+}
