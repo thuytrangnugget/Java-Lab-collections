@@ -1,0 +1,5 @@
+
+- Sua lai cac function trong ham validation
+- Sua lai function checkInput() - them phan kiem tra is empty cua chuoi nhap vao
+- Thay khai bao cac ham ra ngoai de giam bo nho tao ra sau moi vong lap
+- Viet lai ham createStudent() o class Manager de hop ly hon
