@@ -124,26 +124,34 @@ public class Manager {
         boolean loopAskID = true; 
         boolean continueAfterWrongID = true;
         String id;
-        ArrayList<Student> list =  new ArrayList<>();
+        //ArrayList<Student> list =  new ArrayList<>();
         //Nhap sai ID thi nhap lai dua khac
+        Student toFunction = new Student();
         while (loopAskID) {
             System.out.println("Enter id: ");
-            try {
             id = Validation.checkString();
-            list = getListStudentById(ls, id);
-            if (list.isEmpty()) {
-                throw new EmptyStackException();
-                }    
-            } catch (EmptyStackException e) {
-                System.out.println("Student unavailable. Do you want to continue? (Y/N)");
-                if (!Validation.checkInputYN()) {
+            for (Student x : ls) {
+                if (id.equalsIgnoreCase(x.getID())) {
+                    toFunction = x;
+                } else {
                     loopAskID = false;
-                    continueAfterWrongID = false;
                 }
             }
+//            try {
+//            id = Validation.checkString();
+//            list = getListStudentById(ls, id);
+//            if (list.isEmpty()) {
+//                throw new EmptyStackException();
+//                }    
+//            } catch (EmptyStackException e) {
+//                System.out.println("Student unavailable. Do you want to continue? (Y/N)");
+//                if (!Validation.checkInputYN()) {
+//                    loopAskID = false;
+//                    continueAfterWrongID = false;
+//                    }
+//                }
         }
         if(!continueAfterWrongID) return;
-        Student toFunction = getStudentByListFound(list);
         System.out.println("Student's information: ");
         toFunction.print();
         
@@ -164,8 +172,8 @@ public class Manager {
                         System.out.print("Enter new name, press Enter to skip: ");
                         String name = Validation.checkString();
                         if (name.equals('')) {
-                            break;
-                        }
+                            continue;
+                        } else {}
                         break;
                     case 2:
                         break;
@@ -176,7 +184,34 @@ public class Manager {
         }
     }
     
-    public static void sort() {
-    
+    public static void report(ArrayList<Student> ls) {
+        if (ls.isEmpty()) {
+            System.err.println("List empty.");
+            return;
+        }
+        ArrayList<Report> lr = new ArrayList<>();
+        int size = ls.size();
+        for (int i = 0; i < size; i++) {
+            int total = 0;
+            for (Student student1 : ls) {
+                for (Student student2 : ls) {
+                    if (student1.getID().equalsIgnoreCase(student2.getID())
+                            && student1.getCourse().equalsIgnoreCase(student2.getCourse())) {
+                        total++;
+                    }
+                }
+                if (Validation.checkReportExist(lr, student1.getName(),
+                        student1.getCourse(), total)) {
+                    lr.add(new Report(student1.getName(),
+                            student1.getName(), total));
+                }
+            }
+        }
+        //print report
+        for (int i = 0; i < lr.size(); i++) {
+            System.out.printf("%-15s|%-10s|%-5d\n", lr.get(i).getStudentName(),
+                    lr.get(i).getCourseName(), lr.get(i).getTotalCourse());
+        }
     }
 }
+
