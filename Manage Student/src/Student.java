@@ -21,7 +21,7 @@ public class Student implements Comparable<Student>{
                 throw new InputMismatchException();
             }
         } catch (InputMismatchException e) {
-            System.out.println("Course unavailable! You can't input this student!");
+            System.out.println("Course unavailable! You can't add student " + name + " ! ");
         }
         this.course = course;
     }
