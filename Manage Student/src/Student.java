@@ -1,8 +1,5 @@
 
-import java.util.HashMap;
 import java.util.InputMismatchException;
-import java.util.Map;
-import java.util.Set;
 
 public class Student implements Comparable<Student>{
     private String ID;
@@ -14,15 +11,6 @@ public class Student implements Comparable<Student>{
         this.ID = ID;
         this.name = name;
         this.semester = semester;
-        try {
-            if (!course.equalsIgnoreCase("java")
-                    || !course.equalsIgnoreCase("c/c++")
-                    || !course.equalsIgnoreCase(".net")) {
-                throw new InputMismatchException();
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Course unavailable! You can't add student " + name + " ! ");
-        }
         this.course = course;
     }
 
@@ -66,7 +54,7 @@ public class Student implements Comparable<Student>{
     }
     
     public void print(){
-        System.out.printf("%-15s%-15s%-15s\n", name, semester, course);
+        System.out.printf("%-15s %-15s%-15s\n", name, semester, course);
     }
 
     @Override

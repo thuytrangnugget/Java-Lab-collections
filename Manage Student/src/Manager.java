@@ -6,6 +6,7 @@ import java.util.EmptyStackException;
 public class Manager {
     
     public static void menu() {
+        System.out.println("======== STUDENT MANAGEMENT SYSTEM ========");
         System.out.println(" 1.	Create");
         System.out.println(" 2.	Find and Sort");
         System.out.println(" 3.	Update/Delete");
@@ -21,25 +22,63 @@ public class Manager {
         String courseName;
         Student x;
         int count = ls.size();
+        //Student list > 10 student thi bat nhap lai
         if (count > 10) {
             System.out.println("Do you want to continue? (Y/N");
             if (!Validation.checkInputYN()) {
                 return;
             }
         }
+        int countExistedStudent = 0;
         while(true) {
             System.out.println("Enter id: ");
             id = Validation.checkString();
-            System.out.println("Enter name student");
-            name = Validation.checkString();
-            if (!Validation.checkIdExist(ls, id, name)) {
-                System.out.println("ID existed! Please input again!");
-                continue;
+            for (Student s: ls) {
+                if (id.equals(s.getID())) {
+                    countExistedStudent++;
+                }
             }
+            //ton tai student voi ID thi khong bat nhap lai nua
+            if (countExistedStudent > 0) {
+                System.out.println("Found " + countExistedStudent + " records with ID " + id);
+                for (Student s : ls) {
+                    if (id.equals(s.getID())) {
+                        s.print();
+                    }
+                }
+                boolean loop = true;
+                boolean createNewStudent = false;
+                while (loop) {
+                    if (createNewStudent) {
+                        loop = false;
+                    } else {
+                        System.out.println("Do you want to create another record for this student? (Y/N)");
+                        if (Validation.checkInputYN()) {
+                            //everyone will have the same name so we take 1
+                            name = ls.get(0).getName();
+                            newRecordForExsistedStudent(ls, id, name);
+                            //continue;
+                        } else {
+                            System.out.println("Do you want to create another student? (Y/N)");
+                            if (!Validation.checkInputYN()) {
+                                loop = false;
+                            } else {
+                                createNewStudent = true;
+                            }
+                        }
+                    }
+                }
+            } else {
+                id = Validation.checkString();
+            }
+            System.out.println("Creating student with ID: " + id);
+            System.out.print("Enter student's name");
+            name = Validation.checkString();
             System.out.println("Enter semester: ");
             semester = Validation.checkString();
             System.out.println("Enter course name: ");
             courseName = Validation.checkString();
+            
             if (!Validation.checkStudentExist(ls, id, name, semester, courseName)) {
                 x = new Student(id, name, semester, courseName);
                 ls.add(x);
@@ -50,6 +89,24 @@ public class Manager {
             }
             System.err.println("Student existed! Enter another student or back to main screen");
         }
+    }
+    
+    
+    public static void newRecordForExsistedStudent(ArrayList<Student> ls, String id, String name) {
+        String semester, courseName;
+        Student x;
+        System.out.println("Enter semester: ");
+        semester = Validation.checkString();
+        System.out.println("Enter course name: ");
+        courseName = Validation.checkString();
+        if (!Validation.checkStudentExist(ls, id, name, semester, courseName)) {
+                x = new Student(id, name, semester, courseName);
+                ls.add(x);
+                System.out.println("Add new student successfully");
+                x.print();
+                return;
+            }
+            System.err.println("Student existed! Enter another student or back to main screen");
     }
     
     //list student found by name
@@ -81,8 +138,6 @@ public class Manager {
                 student.print();
             }
         }
-        
-        
     }
     
     //Sau nay kiem tra student unavailable cho de
@@ -98,7 +153,6 @@ public class Manager {
     
     
     public static Student getStudentByListFound(ArrayList<Student> listStudentFindByName) {
-        System.out.println("List student found: ");
         System.out.println("List student found: ");
         int count = 1;
         System.out.printf("%-10s%-15s%-15s%-15s\n", "Number", "Student name",
@@ -171,7 +225,7 @@ public class Manager {
                     case 1:
                         System.out.print("Enter new name, press Enter to skip: ");
                         String name = Validation.checkString();
-                        if (name.equals('')) {
+                        if (name == "") {
                             continue;
                         } else {}
                         break;

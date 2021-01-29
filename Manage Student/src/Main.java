@@ -1,16 +1,16 @@
 
 import java.util.ArrayList;
-import jdk.internal.org.objectweb.asm.Opcodes;
 
 public class Main {
     public static void main(String[] args) {
         ArrayList<Student> list = new ArrayList<>();
         int choice;
         Validation validation = new Validation();
-        list.add(new Student("HE150573", "Duong Thuy Trang","Spring 2021", "PRO192"));
-        list.add(new Student("HE150125", "Nguyen Hoang Minh","Spring 2021", "PRO192"));
-        list.add(new Student("HE130594", "Hoang Duc Nam","Spring 2021", "PRO192"));
-        list.add(new Student("HE140595", "Pham Bac Nguyen","Spring 2021", "PRO192"));
+        list.add(new Student("HE150573", "Duong Thuy Trang","Spring 2021", "java"));
+        list.add(new Student("HE150125", "Nguyen Hoang Minh","Spring 2021", "java"));
+        list.add(new Student("HE130594", "Hoang Duc Nam","Spring 2021", ".net"));
+        list.add(new Student("HE140595", "Pham Bac Nguyen","Spring 2021", ".net"));
+        list.add(new Student("HE140595", "Pham Bac Nguyen","Fall 202", "c/c++"));
         while (true) {
             Manager.menu();
             choice = validation.checkInputIntLimit(1, 5);
