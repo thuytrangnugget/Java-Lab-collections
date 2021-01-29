@@ -31,7 +31,7 @@ public class Graph {
     
     public void isEdge(int i, int j) {
         if(edgeCheck(i, j)) {
-            System.out.println("This is edge");
+            System.out.println("This is an edge");
             return;
         } else {
             System.out.println("This is not an edge");
