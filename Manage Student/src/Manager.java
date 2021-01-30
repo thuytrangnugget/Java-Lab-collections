@@ -1,7 +1,6 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EmptyStackException;
 
 public class Manager {
     
@@ -57,26 +56,26 @@ public class Manager {
                             //everyone will have the same name so we take 1
                             name = ls.get(0).getName();
                             newRecordForExsistedStudent(ls, id, name);
-                            //continue;
                         } else {
                             System.out.println("Do you want to create another student? (Y/N)");
                             if (!Validation.checkInputYN()) {
                                 loop = false;
+                                return;
                             } else {
                                 createNewStudent = true;
+                                countExistedStudent = 0;
                             }
                         }
                     }
                 }
-            } else {
-                id = Validation.checkString();
+                continue;
             }
             System.out.println("Creating student with ID: " + id);
-            System.out.print("Enter student's name");
+            System.out.print("Enter student's name: ");
             name = Validation.checkString();
-            System.out.println("Enter semester: ");
+            System.out.print("Enter semester: ");
             semester = Validation.checkString();
-            System.out.println("Enter course name: ");
+            System.out.print("Enter course name: ");
             courseName = Validation.checkString();
             
             if (!Validation.checkStudentExist(ls, id, name, semester, courseName)) {
