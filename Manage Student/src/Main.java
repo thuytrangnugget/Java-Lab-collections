@@ -22,6 +22,7 @@ public class Main {
                     Manager.findAndSort(list);
                     break;
                 case 3:
+                    Manager.updateOrDelete(choice, list);
                     break;
                 case 4:
                     Manager.report(list);

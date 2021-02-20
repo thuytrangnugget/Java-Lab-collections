@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class Manager {
     
@@ -150,7 +151,7 @@ public class Manager {
         return getListStudentById;
     }
     
-    
+    //get student user want to update/delete in list found
     public static Student getStudentByListFound(ArrayList<Student> listStudentFindByName) {
         System.out.println("List student found: ");
         int count = 1;
@@ -168,72 +169,50 @@ public class Manager {
         return listStudentFindByName.get(choice - 1);
     }
     
-    public static void updateOrDelete(ArrayList<Student> ls) {
+    public static void updateOrDelete(int count, ArrayList<Student> ls) {
         if (ls.isEmpty()) {
-            System.err.println("List empty!");
+            System.err.println("List empty");
             return;
         }
-        
-        boolean loopAskID = true; 
-        boolean continueAfterWrongID = true;
-        String id;
-        //ArrayList<Student> list =  new ArrayList<>();
-        //Nhap sai ID thi nhap lai dua khac
-        Student toFunction = new Student();
-        while (loopAskID) {
-            System.out.println("Enter id: ");
-            id = Validation.checkString();
-            for (Student x : ls) {
-                if (id.equalsIgnoreCase(x.getID())) {
-                    toFunction = x;
-                } else {
-                    loopAskID = false;
-                }
-            }
-//            try {
-//            id = Validation.checkString();
-//            list = getListStudentById(ls, id);
-//            if (list.isEmpty()) {
-//                throw new EmptyStackException();
-//                }    
-//            } catch (EmptyStackException e) {
-//                System.out.println("Student unavailable. Do you want to continue? (Y/N)");
-//                if (!Validation.checkInputYN()) {
-//                    loopAskID = false;
-//                    continueAfterWrongID = false;
-//                    }
-//                }
-        }
-        if(!continueAfterWrongID) return;
-        System.out.println("Student's information: ");
-        toFunction.print();
-        
-        //Thao tac chinh
-        boolean loop = true;
-        System.out.print("Do you want to update (U) or delete (D) student: ");
-        int updateChoice;
-        while (loop) {
-            //Validation.checkInputUD() --> update
+        System.out.print("Enter id: ");
+        String id = Validation.checkString(); 
+        ArrayList<Student> listStudentFindByName = getListStudentById(ls, id);
+        if (listStudentFindByName.isEmpty()) {
+            System.err.println("Student not found!");
+            return;
+        } else {
+            Student student = getStudentByListFound(listStudentFindByName);
+            System.out.print("Do you want to update (U) or delete (D) this student? ");
             if (Validation.checkInputUD()) {
-                System.out.println("1. Update name");
-                System.out.println("2. Updte semester");
-                System.out.println("3. Update courseName");
-                System.out.print("Select your option (1/2/3)");
-                updateChoice = Validation.checkInputIntLimit(1, 3);
-                switch (updateChoice) {
-                    case 1:
-                        System.out.print("Enter new name, press Enter to skip: ");
-                        String name = Validation.checkString();
-                        if (name == "") {
-                            continue;
-                        } else {}
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
+                Scanner sc = new Scanner (System.in);
+                while (true) {
+                    System.out.println("Updating student");
+                    System.out.println("Type new name or press Enter to skip: ");
+                    String name = sc.nextLine();
+                    if (name.compareTo("") != 0) {
+                        student.setName(name);
+                    }
+                    System.out.println("Type new semester or press Enter to skip: ");
+                    String semester = sc.nextLine();
+                    if (semester.compareTo("") != 0) {
+                        student.setSemester(semester);
+                    }
+                    System.out.println("Type new course or press Enter to skip: ");
+                    String course = sc.nextLine();
+                    if (course.compareTo("") != 0) {
+                        student.setCourse(course);
+                    }
+                    if (Validation.checkStudentExist(ls, id, name, semester, course)) {
+                        System.out.println("Update sucessully");
+                        return;
+                    }
+                    return;
                 }
-            }
+            } else {
+                ls.remove(student);
+                count--;
+                System.out.println("Delete student with ID " + id + "successfully");
+            }   return;
         }
     }
     
