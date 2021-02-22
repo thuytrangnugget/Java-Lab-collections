@@ -59,13 +59,13 @@ public class Student implements Comparable<Student>{
     }
 
     @Override
-    public int compareTo(Student o) {
+    public int compareTo(Student t) {
         String[] words1 = new String[5];
         String[] words2 = new String[5];
         int num1 = 0;
         int num2 = 0;
         StringTokenizer tk1 = new StringTokenizer(this.getName());
-        StringTokenizer tk2 = new StringTokenizer(o.getName());
+        StringTokenizer tk2 = new StringTokenizer(t.getName());
         
         while (tk1.hasMoreTokens()) {
             words1[num1] = tk1.nextToken();
@@ -84,7 +84,7 @@ public class Student implements Comparable<Student>{
                 break;
             }
         }
-        return this.getName().compareTo(o.getName());
+        return this.getName().compareTo(t.getName());
     }
 
 }

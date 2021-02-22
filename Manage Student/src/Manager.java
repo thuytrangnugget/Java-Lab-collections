@@ -89,6 +89,7 @@ public class Manager {
             } else {
                 System.err.println("Record existed! Enter another student or back to main screen");
             }
+                    System.out.println("");
         }
     }
     
@@ -143,6 +144,7 @@ public class Manager {
                 student.print();
             }
         }
+        System.out.println("");
     }
     
     //Sau nay kiem tra student unavailable cho de
@@ -217,7 +219,9 @@ public class Manager {
                 ls.remove(student);
                 count--;
                 System.out.println("Delete student with ID " + id + " successfully");
-            }   return;
+            }   
+                System.out.println("");
+                return;
         }
     }
     
