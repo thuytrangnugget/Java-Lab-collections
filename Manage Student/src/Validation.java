@@ -26,9 +26,8 @@ public class Validation {
         String result;
         while (true) {
             result = in.nextLine().trim();
-            if (result.isEmpty()) {
-                System.err.println("String can't be empty!");
-                System.out.println("Enter again: ");
+            if (result.equals("")) {
+                return "";
             } else {
                 return result;
             }
@@ -79,10 +78,10 @@ public class Validation {
         }
     }
     
-    public static boolean checkReportExist(ArrayList<Report> lr, String name,
-            String course, int total) {
-        for (Report report : lr) {
-            if (name.equalsIgnoreCase(report.getStudentName())
+    
+    public static boolean checkReportExist(ArrayList<Report> listReport, String name, String course, int total) {
+        for(Report report : listReport) {
+            if(name.equalsIgnoreCase(report.getCourseName())
                     && course.equalsIgnoreCase(report.getCourseName())
                     && total == report.getTotalCourse()) {
                 return false;

@@ -1,4 +1,7 @@
 
+import java.util.StringTokenizer;
+
+
 public class Student implements Comparable<Student>{
     private String ID;
     private String name;
@@ -56,13 +59,38 @@ public class Student implements Comparable<Student>{
     }
 
     @Override
-    public int compareTo(Student t) {
-        return t.name.compareTo(this.name);
+    public int compareTo(Student o) {
+        String[] words1 = new String[5];
+        String[] words2 = new String[5];
+        int num1 = 0;
+        int num2 = 0;
+        StringTokenizer tk1 = new StringTokenizer(this.getName());
+        StringTokenizer tk2 = new StringTokenizer(o.getName());
+        
+        while (tk1.hasMoreTokens()) {
+            words1[num1] = tk1.nextToken();
+            num1++;
+        }
+        while (tk2.hasMoreTokens()) {
+            words2[num2] = tk2.nextToken();
+            num2++;
+        }
+        while (true) {
+            int temp = words1[--num1].compareTo(words2[--num2]);
+            if (temp != 0) {
+                return temp;
+            }
+            if (num1 == 0 || num2 == 0) {
+                break;
+            }
+        }
+        return this.getName().compareTo(o.getName());
     }
+
 }
 
-class Report {
 
+class Report {
     private String studentName;
     private String courseName;
     private int totalCourse;

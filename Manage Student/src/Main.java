@@ -7,6 +7,7 @@ public class Main {
         int choice;
         Validation validation = new Validation();
         list.add(new Student("HE150573", "Duong Thuy Trang","Spring 2021", "java"));
+        list.add(new Student("HE150573", "Duong Thuy Trang","Fall 2020", "c/c++"));
         list.add(new Student("HE150125", "Nguyen Hoang Minh","Spring 2021", "java"));
         list.add(new Student("HE130594", "Hoang Duc Nam","Spring 2021", ".net"));
         list.add(new Student("HE140595", "Pham Bac Nguyen","Spring 2021", ".net"));

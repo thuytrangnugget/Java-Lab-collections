@@ -77,7 +77,7 @@ public class Manager {
             System.out.print("Enter semester: ");
             semester = Validation.checkString();
             System.out.print("Enter course name: ");
-            courseName = Validation.checkString();
+            courseName = Validation.InputCourse();
             
             if (!Validation.checkStudentExist(ls, id, name, semester, courseName)) {
                 x = new Student(id, name, semester, courseName);
@@ -86,8 +86,9 @@ public class Manager {
                 System.out.println("Add new student successfully");
                 x.print();
                 return;
+            } else {
+                System.err.println("Record existed! Enter another student or back to main screen");
             }
-            System.err.println("Student existed! Enter another student or back to main screen");
         }
     }
     
@@ -106,17 +107,21 @@ public class Manager {
                 x.print();
                 return;
             }
-            System.err.println("Student existed! Enter another student or back to main screen");
+        System.err.println("Record existed! Enter another student or back to main screen");
     }
     
     //list student found by name
     public static ArrayList<Student> listStudentFindByName(ArrayList<Student> ls) {
         ArrayList<Student> listStudentFindByName = new ArrayList<>();
-        System.out.println("Enter name to search: ");
+        System.out.print("Enter name to search or press Enter to display every student: ");
         String name = Validation.checkString();
-        for (Student student : ls) {
-            if (student.getName().contains(name)) {
+        if (name.equals("")) {
+            return ls;
+        } else {
+            for (Student student : ls) {
+                if (student.getName().contains(name)) {
                 listStudentFindByName.add(student);
+                }
             }
         }
         return listStudentFindByName;
@@ -187,17 +192,17 @@ public class Manager {
                 Scanner sc = new Scanner (System.in);
                 while (true) {
                     System.out.println("Updating student");
-                    System.out.println("Type new name or press Enter to skip: ");
+                    System.out.print("Type new name or press Enter to skip: ");
                     String name = sc.nextLine();
                     if (name.compareTo("") != 0) {
                         student.setName(name);
                     }
-                    System.out.println("Type new semester or press Enter to skip: ");
+                    System.out.print("Type new semester or press Enter to skip: ");
                     String semester = sc.nextLine();
                     if (semester.compareTo("") != 0) {
                         student.setSemester(semester);
                     }
-                    System.out.println("Type new course or press Enter to skip: ");
+                    System.out.print("Type new course or press Enter to skip: ");
                     String course = sc.nextLine();
                     if (course.compareTo("") != 0) {
                         student.setCourse(course);
@@ -211,39 +216,38 @@ public class Manager {
             } else {
                 ls.remove(student);
                 count--;
-                System.out.println("Delete student with ID " + id + "successfully");
+                System.out.println("Delete student with ID " + id + " successfully");
             }   return;
         }
     }
     
     public static void report(ArrayList<Student> ls) {
         if (ls.isEmpty()) {
-            System.err.println("List empty.");
+            System.err.println("List empty");
             return;
         }
-        ArrayList<Report> lr = new ArrayList<>();
-        int size = ls.size();
-        for (int i = 0; i < size; i++) {
+        ArrayList<Report> reportList = new ArrayList<>();
+        for (int i = 0; i < ls.size(); i++) {
             int total = 0;
-            for (Student student1 : ls) {
-                for (Student student2 : ls) {
-                    if (student1.getID().equalsIgnoreCase(student2.getID())
-                            && student1.getCourse().equalsIgnoreCase(student2.getCourse())) {
-                        total++;
-                    }
-                }
-                if (Validation.checkReportExist(lr, student1.getName(),
-                        student1.getCourse(), total)) {
-                    lr.add(new Report(student1.getName(),
-                            student1.getName(), total));
+            String id = ls.get(i).getID();
+            String courseName = ls.get(i).getCourse();
+            String studentName = ls.get(i).getName();
+            for (Student studentCountTotal : ls) {
+                if (id.equalsIgnoreCase(studentCountTotal.getID())) {
+                    total++;
                 }
             }
+            if (Validation.checkReportExist(reportList, studentName, courseName, total)) {
+                reportList.add(new Report(ls.get(i).getName(), courseName, total));
+            }
+
         }
         //print report
-        for (int i = 0; i < lr.size(); i++) {
-            System.out.printf("%-15s|%-10s|%-5d\n", lr.get(i).getStudentName(),
-                    lr.get(i).getCourseName(), lr.get(i).getTotalCourse());
+        for (int i = 0; i < reportList.size(); i++) {
+            System.out.printf("%-15s|%-10s|%-5d\n", reportList.get(i).getStudentName(),
+                    reportList.get(i).getCourseName(), reportList.get(i).getTotalCourse());
         }
     }
+
 }
 
