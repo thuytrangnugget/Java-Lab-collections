@@ -58,7 +58,7 @@ public class Fruit {
 
     @Override
     public String toString() {
-        return "Fruit{" + "ID=" + ID + ", name=" + name + ", quantity=" + quantity + ", price=" + price + ", origin=" + origin + '}';
+        return "Fruit{" + "ID=" + this.getID() + ", name=" + this.getName() + ", quantity=" + this.getQuantity() + ", price=" + this.getPrice() + ", origin=" + this.getOrigin() + '}';
     }
     
     

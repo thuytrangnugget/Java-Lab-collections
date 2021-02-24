@@ -1,8 +1,10 @@
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class Manager {
     static int menu() {
+        System.out.println("============= WELCOME TO THE FRUIT SHOP =============");
         System.out.println("1. Create Fruit");
         System.out.println("2. View orders");
         System.out.println("3. Shopping (for buyer)");
@@ -16,8 +18,10 @@ public class Manager {
         for (Fruit fruit : lf) {
             if (ID.equalsIgnoreCase(fruit.getID())) {
                 fruit.toString();
+                return;
             }
         }
+        System.out.println("This fruit doesn't exist");
     }
     
     static void createFruit(ArrayList<Fruit> lf) {
@@ -45,6 +49,27 @@ public class Manager {
     void listAllFruit(ArrayList<Fruit> lf) {
         for (Fruit f: lf) {
             f.toString();
+        }
+    }
+    
+    void displayListOrder(ArrayList<Order> lo) {
+        double total = 0;
+        System.out.printf("%15s | %15s | %15s | %15s\n", "Product", "Quantity", "Price", "Amount");
+        for (Order order : lo) {
+            System.out.printf("%15s%15d%15.0f$%15.0f$\n", order.getFruitName(),
+                    order.getQuantity(), order.getPrice(),
+                    order.getPrice() * order.getQuantity());
+            total += order.getPrice() * order.getQuantity();
+        }
+        System.out.println("Total: " + total);
+        
+    }
+    
+    void viewOrder(Hashtable<String, ArrayList<Order>> ht) {
+        for (String name: ht.keySet()) {
+            System.out.println("Customer: " + name);
+            ArrayList<Order> or = ht.get(name);
+            displayListOrder(or);
         }
     }
 }

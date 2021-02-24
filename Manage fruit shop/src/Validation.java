@@ -115,7 +115,7 @@ public class Validation {
     //check item exist or not
     public static boolean checkItemExist(ArrayList<Order> lo, String id) {
         for (Order order : lo) {
-            if (order.getID().equalsIgnoreCase(id)) {
+            if (order.getFruitID().equalsIgnoreCase(id)) {
                 return false;
             }
         }
