@@ -7,12 +7,11 @@ public class Order {
     
     public Order() {}
 
-    public Order(String fruitID, String fruitName, int quantity, double price, double total) {
+    public Order(String fruitID, String fruitName, int quantity, double price) {
         this.fruitID = fruitID;
         this.fruitName = fruitName;
-        this.quantity = 0;
+        this.quantity = quantity;
         this.price = price;
-        this.total = total;
     }
 
     public String getFruitID() {

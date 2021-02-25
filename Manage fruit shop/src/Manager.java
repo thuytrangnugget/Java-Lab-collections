@@ -55,13 +55,14 @@ public class Manager {
     }
     
     static void displayListOrder(ArrayList<Order> lo) {
-        double total;
+        double total = 0;
         System.out.printf("%15s | %15s | %15s | %15s\n", "Product", "Quantity", "Price", "Amount");
         for (Order order : lo) {
             System.out.printf("%15s%15d%15.0f$%15.0f$\n", order.getFruitName(),
                     order.getQuantity(), order.getPrice(),
                     order.getPrice() * order.getQuantity());
-            total = order.getTotal();
+            total += order.getPrice() * order.getQuantity();
+            order.setTotal(total);
         }
         System.out.println("Total: " + total);
         
@@ -106,7 +107,6 @@ public class Manager {
 
     
     static void shopping(ArrayList<Fruit> lf, Hashtable<String, ArrayList<Order>> ht) {
-        double total;
         if (lf.isEmpty()) {
             System.err.println("No item!");
             return;
@@ -127,8 +127,7 @@ public class Manager {
                 System.out.println("Order details: ");
                 System.out.printf("%-20s%-20s%-15s\n", "Fruit name", "Origin", "Price($)");
                 System.out.printf("%-20s%-20s%-15.0f\n", fruit.getName(), fruit.getOrigin(), fruit.getPrice());
-                total = fruit.getPrice() * fruit.getQuantity();
-                lo.add(new Order(fruit.getID(), fruit.getName(), fruit.getQuantity(), fruit.getPrice(), total));
+                lo.add(new Order(fruit.getID(), fruit.getName(), quantity, fruit.getPrice()));
             }
             if (!Validation.checkInputYN()) break;
             System.out.println("");
@@ -136,7 +135,14 @@ public class Manager {
         displayListOrder(lo);
         System.out.println("Enter customer's name: ");
         String name = Validation.checkInputString(); 
-        ht.put(name, lo);
+        try {
+            ArrayList<Order> o = ht.get(name);
+            for (Order n : lo) {
+            o.add(n);
+        }
+        } catch (NullPointerException e) {
+            ht.put(name, lo);
+        }
         System.out.println("Thank you, " + name + "! Your order is on the way.");
     }
     
