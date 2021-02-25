@@ -2,16 +2,21 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
+import java.util.Scanner;
 
 public class Manager {
     static int menu() {
         System.out.println("============= WELCOME TO THE FRUIT SHOP =============");
         System.out.println("1. Create Fruit");
-        System.out.println("2. View orders");
-        System.out.println("3. Shopping (for buyer)");
-        System.out.println("4. Exit");
+        System.out.println("2. Update quantity of fruit");
+        System.out.println("3. View orders");
+        System.out.println("4. View feedback");
+        System.out.println("5. Create feedback");
+        System.out.println("6. Shopping (for buyer)");
+        System.out.println("7. Report");
+        System.out.println("8. Exit");
         System.out.print("Enter your choice: ");
-        int choice = Validation.checkInputIntLimit(1, 4);
+        int choice = Validation.checkInputIntLimit(1, 8);
         return choice;
     }
     
@@ -54,6 +59,36 @@ public class Manager {
         }
     }
     
+    static void updateQuantityFruit(ArrayList<Fruit> lf) {
+        if (lf.isEmpty()) {
+            System.err.println("No item!");
+            return;
+        }
+        displayListFruitwithID(lf);
+        int quantity;
+        while (true) {
+            System.out.print("Enter fruit ID to update quantity: ");
+            String ID = Validation.checkInputString();
+            if(!Validation.checkIdExist(lf, ID)) {
+                System.out.print("Enter quantity: ");
+                quantity = Validation.checkInputInt();
+                Fruit toUpdate = null;
+                for (Fruit f : lf) {
+                    if (f.getID().equals(ID)) {
+                        f.setQuantity(f.getQuantity() + quantity);
+                        toUpdate = f;
+                    }
+                }
+                System.out.println("Update quantity of fruit with ID " + ID + " successfully:");
+                System.out.printf("%-20s%-20s%-15.0f%-15s\n",
+                        toUpdate.getName(), toUpdate.getOrigin(), toUpdate.getPrice(), toUpdate.getQuantity());
+            } else {
+                System.err.println("ID doesn't exist! You may want to create fruit first!");
+            }
+            if (!Validation.checkInputYN()) return;
+        }
+    }
+    
     static void displayListOrder(ArrayList<Order> lo) {
         double total = 0;
         System.out.printf("%15s | %15s | %15s | %15s\n", "Product", "Quantity", "Price", "Amount");
@@ -65,7 +100,6 @@ public class Manager {
             order.setTotal(total);
         }
         System.out.println("Total: " + total);
-        
     }
     
     static void viewOrder(Hashtable<String, ArrayList<Order>> ht) {
@@ -83,11 +117,22 @@ public class Manager {
     static void displayListFruit(ArrayList<Fruit> lf) {
         int countItem = 1; 
         Collections.sort(lf, new SortbyName());
-        System.out.printf("%-10s%-20s%-20s%-15s\n", "Item", "Fruit name", "Origin", "Price($)");    
+        System.out.printf("%-10s%-20s%-20s%-15s%-15s\n", "Item", "Fruit name", "Origin", "Price($)", "Quantity");    
         for (Fruit fruit : lf) {
             if (fruit.getQuantity() != 0) {
-                System.out.printf("%-10d%-20s%-20s%-15.0f\n", countItem++,
-                        fruit.getName(), fruit.getOrigin(), fruit.getPrice());
+                System.out.printf("%-10d%-20s%-20s%-15.0f%-15s\n", countItem++,
+                        fruit.getName(), fruit.getOrigin(), fruit.getPrice(), fruit.getQuantity());
+            }
+        }
+    }
+    
+    static void displayListFruitwithID(ArrayList<Fruit> lf) {
+        Collections.sort(lf, new SortbyName());
+        System.out.printf("%-10s%-20s%-20s%-15s%-15s\n", "ID", "Fruit name", "Origin", "Price($)", "Quantity");    
+        for (Fruit fruit : lf) {
+            if (fruit.getQuantity() != 0) {
+                System.out.printf("%-10s%-20s%-20s%-15.0f%-15s\n", fruit.getID(),
+                        fruit.getName(), fruit.getOrigin(), fruit.getPrice(), fruit.getQuantity());
             }
         }
     }
@@ -104,7 +149,7 @@ public class Manager {
         }
         return null;
     }
-
+    
     
     static void shopping(ArrayList<Fruit> lf, Hashtable<String, ArrayList<Order>> ht) {
         if (lf.isEmpty()) {
@@ -154,5 +199,63 @@ public class Manager {
                 return;
             }
         }
+    }
+    
+    //only available for customer
+    static void createFeedback(Hashtable<String, ArrayList<Order>> ht, Hashtable<String, ArrayList<Feedback>> fb) {
+        System.out.print("Enter your name: ");
+        String name = Validation.checkInputString(); 
+        if (ht.containsKey(name)) {
+            ArrayList<Feedback> lo = new ArrayList<>();
+            System.out.print("How was your experience? (Enter 1 for really Bad, 5 for very good): ");
+            int rate = Validation.checkInputIntLimit(1, 5);
+            System.out.println("Tell us what you think or press Enter to skip: ");
+            Scanner sc = new Scanner(System.in);
+            String feedback = sc.nextLine();
+            if (feedback.equals("")) {
+                return;
+            } else {
+                Feedback a = new Feedback(feedback, rate);
+                try {
+                    ArrayList<Feedback> o = fb.get(name);
+                    for (Feedback n : o) {
+                        o.add(n);
+                    }
+                } catch (NullPointerException e) {
+                    fb.put(name, lo);
+                }
+                System.out.println("THANK YOU FOR YOUR FEEDBACK! SEE YOU AGAIN!");
+            }
+        } else {
+            System.err.println("You are our new customer! Buy something first!");
+        }
+    }
+    
+    static void viewFeedback(Hashtable<String, ArrayList<Feedback>> fb) {
+        if (fb.keySet().isEmpty()) {
+            System.err.println("No feedback have created yet");
+            System.out.println("");
+        } else {
+            for (String name: fb.keySet()) {
+            System.out.println("Customer: " + name);
+            ArrayList<Feedback> or = fb.get(name);
+            displayListFeedback(or);
+            }
+        }
+    }
+    
+    static void displayListFeedback(ArrayList<Feedback> fb) {
+        for (Feedback f : fb) {
+            System.out.println("Rating: " + f.getPoint());
+            System.out.println(f.getFeedback());
+        }
+    }
+    
+    static void report(Hashtable<String, ArrayList<Order>> ht) {
+        double totalAmount = 0;
+        //ArrayList<Order> ls = ht.values();
+        //total quantity and income from each fruit
+        //spending by each customer
+        //average rating
     }
 }

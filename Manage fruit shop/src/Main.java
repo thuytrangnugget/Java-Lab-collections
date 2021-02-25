@@ -16,7 +16,7 @@ public class Main {
         lf.add(new Fruit("008", "Cantaloupe", 10, 5, "America"));
         lf.add(new Fruit("009", "Carambola", 10, 9, "America"));
         Hashtable<String, ArrayList<Order>> ht = new Hashtable<>();
-        
+        Hashtable<String, ArrayList<Feedback>> feedback = new Hashtable<>();
         while (true) {
             int choice = Manager.menu();
             switch (choice) {
@@ -24,12 +24,24 @@ public class Main {
                     Manager.createFruit(lf);
                     break;
                 case 2:
-                    Manager.viewOrder(ht);
+                    Manager.updateQuantityFruit(lf);
                     break;
                 case 3:
-                    Manager.shopping(lf, ht);
+                    Manager.viewOrder(ht);
                     break;
                 case 4:
+                    Manager.viewFeedback(feedback);
+                    break;
+                case 5:
+                    Manager.createFeedback(ht, feedback);
+                    break;
+                case 6:
+                    Manager.shopping(lf, ht);
+                    break;
+                case 7:
+                    Manager.report(ht);
+                    break;
+                case 8:
                     return;
             }
         }
