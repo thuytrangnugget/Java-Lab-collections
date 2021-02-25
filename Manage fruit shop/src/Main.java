@@ -24,8 +24,10 @@ public class Main {
                     Manager.createFruit(lf);
                     break;
                 case 2:
+                    Manager.viewOrder(ht);
                     break;
                 case 3:
+                    Manager.shopping(lf, ht);
                     break;
                 case 4:
                     return;

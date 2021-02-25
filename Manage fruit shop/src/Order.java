@@ -3,14 +3,16 @@ public class Order {
     private String fruitName;
     private int quantity;
     private double price;
+    private double total;
     
     public Order() {}
 
-    public Order(String fruitID, String fruitName, int quantity, double price) {
+    public Order(String fruitID, String fruitName, int quantity, double price, double total) {
         this.fruitID = fruitID;
         this.fruitName = fruitName;
-        this.quantity = quantity;
+        this.quantity = 0;
         this.price = price;
+        this.total = total;
     }
 
     public String getFruitID() {
@@ -43,6 +45,14 @@ public class Order {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
     
     

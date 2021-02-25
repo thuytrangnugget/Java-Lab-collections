@@ -1,7 +1,7 @@
 
 import java.util.Comparator;
 
-public class Fruit implements  Comparator<Fruit>{
+public class Fruit {
    private String ID;
    private String name;
    private int quantity;

@@ -98,6 +98,24 @@ public class Validation {
         }
     }
     
+    public static boolean AreYouSureYN(String s) {
+        System.out.print(s);
+        //loop until user input correct
+        while (true) {
+            String result = checkInputString();
+            //return true if user input y/Y
+            if (result.equalsIgnoreCase("Y")) {
+                return true;
+            }
+            //return false if user input n/N
+            if (result.equalsIgnoreCase("N")) {
+                return false;
+            }
+            System.err.println("Please input y/Y or n/N.");
+            System.out.print("Enter again: ");
+        }
+    }
+    
     //check id exist
     public static boolean checkIdExist(ArrayList<Fruit> lf, String id) {
         for (Fruit fruit : lf) {
