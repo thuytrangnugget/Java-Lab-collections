@@ -1,4 +1,7 @@
-public class Fruit {
+
+import java.util.Comparator;
+
+public class Fruit implements  Comparator<Fruit>{
    private String ID;
    private String name;
    private int quantity;
@@ -56,11 +59,14 @@ public class Fruit {
         this.origin = origin;
     }
 
-    @Override
-    public String toString() {
-        return "Fruit{" + "ID=" + this.getID() + ", name=" + this.getName() + ", quantity=" + this.getQuantity() + ", price=" + this.getPrice() + ", origin=" + this.getOrigin() + '}';
+    public void print(){
+        System.out.printf("%-15s %-15s%-15s\n", name, quantity, price);
     }
-    
-    
+   
+}
 
+class SortbyName implements Comparator<Fruit> {
+    public int compare (Fruit a, Fruit b) {
+        return a.getName().compareTo(b.getName());
+    }
 }

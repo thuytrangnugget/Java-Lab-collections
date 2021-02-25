@@ -39,14 +39,10 @@ public class Validation {
         //String result;
         while (true) {
             String ID = in.nextLine().trim();
-            if (ID.equals("")) return "";
             if (ID.isEmpty()) {
-                System.err.println("Not empty");
-                System.out.print("Enter again: ");
+                return "";
             } else if (!checkIdExist(lf, ID)){
                 System.err.println("Fruit with ID exist!");
-                System.out.print("Found fruit with ID " + ID + ": ");
-                Manager.fruitWithIDFound(lf, ID);
                 System.err.println("Type in another ID or press Enter to back to main screen");
             } else {
                 return ID;
