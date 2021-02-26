@@ -47,11 +47,11 @@ public class Manager {
             int quantity = Validation.checkInputInt();
             System.out.print("Enter origin: ");
             String origin = Validation.checkInputString();
-            if (!Validation.AreYouSureYN("Are you sure to create new fruit? (Y/N): ")) return;
-            if (!Validation.checkInputYN()) {
-                System.out.println("");
-                return;
-            } else lf.add(new Fruit(fruitID, name, quantity, price, origin));
+            if (!Validation.AreYouSureYN("Are you sure to create new fruit? (Y/N): ")) return; 
+            else {
+                lf.add(new Fruit(fruitID, name, quantity, price, origin));
+                System.out.println("Add " + name + " successfully");
+            } 
             if (!Validation.checkInputYN()) {
                 System.out.println("");
                 return;
