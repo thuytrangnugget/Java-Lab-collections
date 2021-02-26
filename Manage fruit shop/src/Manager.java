@@ -216,9 +216,10 @@ public class Manager {
                 return;
             } else {
                 Feedback a = new Feedback(feedback, rate);
+                lo.add(a);
                 try {
                     ArrayList<Feedback> o = fb.get(name);
-                    for (Feedback n : o) {
+                    for (Feedback n : lo) {
                         o.add(n);
                     }
                 } catch (NullPointerException e) {
