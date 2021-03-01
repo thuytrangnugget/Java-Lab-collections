@@ -226,9 +226,11 @@ public class Manager {
                     fb.put(name, lo);
                 }
                 System.out.println("THANK YOU FOR YOUR FEEDBACK! SEE YOU AGAIN!");
+                System.out.println("");
             }
         } else {
             System.err.println("You are our new customer! Buy something first!");
+            return; 
         }
     }
     
@@ -238,11 +240,13 @@ public class Manager {
             System.out.println("");
         } else {
             for (String name: fb.keySet()) {
-            System.out.println("Customer: " + name);
+            System.out.println("**Customer: " + name);
             ArrayList<Feedback> or = fb.get(name);
             displayListFeedback(or);
             }
+            System.out.println("");
         }
+        System.out.println("");
     }
     
     static void displayListFeedback(ArrayList<Feedback> fb) {
